@@ -10,13 +10,16 @@ from .models import User
 class UserView(APIView):
     
     def post(self, request):
-        print(request.data)
         serializer = UserCreateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(UserSerializer(serializer.data).data, status=201)
         
         return Response(serializer.errors, status=400)
+    
+    def get(self, request, *args, **kwargs):
+        serializer = UserSerializer(User.objects.all(), many=True)
+        return Response(serializer.data)
     
     
 class UserDetailView(generics.RetrieveDestroyAPIView):

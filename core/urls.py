@@ -18,8 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from users import urls as users_url
 from notes import urls as notes_url
+from .views import HomeView
+
 
 urlpatterns = [
-    path('user/', include(users_url)),
+    path('', HomeView.as_view()),
+    path('users/', include(users_url)),
     path('notes/', include(notes_url)),
 ]
