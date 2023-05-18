@@ -33,8 +33,10 @@ jobs:
       - name: Setup environment variables
         env:
           APP_ENVIRONMENT_FILE: ${{secrets.APP_ENVIRONMENT_FILE}}
+          CERT_URL: ${{secrets.CERT_URL}}
         run: |
           echo $APP_ENVIRONMENT_FILE | base64 --decode > core/.env
+          curl --create-dirs -o .postgresql/root.crt $CERT_URL
       
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2
