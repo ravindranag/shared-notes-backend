@@ -44,7 +44,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: python-app
-          path: .
+          path: |
+            .
+            !antenv
 
   deploy:
     runs-on: ubuntu-latest
@@ -66,4 +68,4 @@ jobs:
         with:
           app-name: 'shared-notes'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5D6A041951474AE4A560EECA0FF17D52 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
