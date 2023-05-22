@@ -21,30 +21,12 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: '3.11'
-
-      - name: Create and start virtual environment
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-      
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Setup environment variables
-        env:
-          APP_ENVIRONMENT_FILE: ${{secrets.APP_ENVIRONMENT_FILE}}
-          CERT_URL: ${{secrets.CERT_URL}}
-        run: |
-          echo $APP_ENVIRONMENT_FILE | base64 --decode > core/.env
-          curl --create-dirs -o .postgresql/root.crt $CERT_URL
       
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2
         with:
           name: python-app
-          path: |
-            . 
-            !venv/
+          path: .
 
   deploy:
     runs-on: ubuntu-latest
